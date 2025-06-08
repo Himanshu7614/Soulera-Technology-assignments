@@ -108,13 +108,76 @@ npm install
 # Database setup
 createdb ecommerce_db
 
-# Configure environment (update config.env)
+# Configure environment (see configuration below)
 # Start development server
 npm run dev
 
 # Optional: Populate with sample data
 npm run seed
 ```
+
+### Environment Configuration
+
+Create a `config.env` file in the root directory with the following configuration:
+
+```env
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=ecommerce_db
+DB_USER=your_postgres_username
+DB_PASSWORD=your_postgres_password
+
+# JWT Configuration
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-min-32-chars
+JWT_EXPIRES_IN=7d
+
+# Server Configuration
+PORT=4000
+NODE_ENV=development
+
+# Apollo Server Configuration
+APOLLO_INTROSPECTION=true
+APOLLO_PLAYGROUND=true
+```
+
+#### **Environment Variables Explained:**
+
+| Variable | Description | Example | Required |
+|----------|-------------|---------|----------|
+| `DB_HOST` | PostgreSQL database host | `localhost` | ✅ |
+| `DB_PORT` | PostgreSQL database port | `5432` | ✅ |
+| `DB_NAME` | Database name | `ecommerce_db` | ✅ |
+| `DB_USER` | Database username | `postgres` | ✅ |
+| `DB_PASSWORD` | Database password | `yourpassword` | ✅ |
+| `JWT_SECRET` | Secret key for JWT tokens (min 32 characters) | `your-secret-key-here` | ✅ |
+| `JWT_EXPIRES_IN` | JWT token expiration time | `7d`, `24h`, `30m` | ✅ |
+| `PORT` | Server port number | `4000` | ✅ |
+| `NODE_ENV` | Environment mode | `development`, `production` | ✅ |
+| `APOLLO_INTROSPECTION` | Enable GraphQL introspection | `true`, `false` | ✅ |
+| `APOLLO_PLAYGROUND` | Enable GraphQL Playground | `true`, `false` | ✅ |
+
+#### **Production Environment Setup:**
+```env
+# Production configuration
+NODE_ENV=production
+DB_HOST=your-production-db-host.amazonaws.com
+DB_NAME=ecommerce_prod
+DB_USER=prod_user
+DB_PASSWORD=super-secure-production-password
+JWT_SECRET=ultra-secure-32-character-minimum-production-jwt-secret-key
+JWT_EXPIRES_IN=24h
+PORT=4000
+APOLLO_INTROSPECTION=false
+APOLLO_PLAYGROUND=false
+```
+
+#### **Security Best Practices:**
+- **JWT_SECRET**: Use a random 32+ character string in production
+- **Database Credentials**: Use environment-specific credentials  
+- **APOLLO_INTROSPECTION**: Disable in production for security
+- **APOLLO_PLAYGROUND**: Disable in production environments
+- **Never commit** the `config.env` file to version control
 
 ### Test the API
 Visit `http://localhost:4000/graphql` and try these credentials:
